@@ -49,6 +49,9 @@ function onDataReceived(text) {
   else if(text.startsWith('add')){
     add(text);
   }
+  else if(text.startsWith('remove')){
+    removeTask(text);
+  }
   else{
     unknownCommand(text);
   }
@@ -125,4 +128,23 @@ function add(obj) {
   else {
     taskslist.push(obj)
   }
+}
+
+//removing tasks from the list//
+function removeTask(obj) {
+  obj = obj.replace('\n', '').trim();
+  if (obj === "remove\n") {
+    taskslist.pop();
+    return
+  }
+  var command = obj.split(' ');
+  if (command[0] === 'remove'){
+    var a = command.slice(1).join(' ');
+    if (a > taskslist.length) {
+      console.log("This task doesn't exist");
+    }
+  else {
+    taskslist.slice(`${a[0] - 1}`, 1);
+  }
+}
 }
