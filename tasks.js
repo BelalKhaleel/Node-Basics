@@ -84,7 +84,7 @@ function quit(){
 // The following line starts the application
 startApp("Belal Khaleel")
 
-//command hello that has all commands//
+//command "help" displays all possible commands//
 
 function help () {
   let commandList = ["hello", "help", "exit", "quit"]
