@@ -40,6 +40,9 @@ function onDataReceived(text) {
   else if(text === 'hello\n'){
     hello();
   }
+  else if(text === 'help\n'){
+    help();
+  }
   else{
     unknownCommand(text);
   }
@@ -80,3 +83,12 @@ function quit(){
 
 // The following line starts the application
 startApp("Belal Khaleel")
+
+//command hello that has all commands//
+
+function help () {
+  let commandList = ["hello", "help", "exit", "quit"]
+  console.log("\nThe commands are: \n")
+  commandList.forEach((e) => {
+  console.log(e)})
+}
