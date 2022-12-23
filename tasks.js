@@ -46,6 +46,9 @@ function onDataReceived(text) {
   else if(text === 'list\n'){
     list();
   }
+  else if(text.startsWith('add')){
+    add(text);
+  }
   else{
     unknownCommand(text);
   }
@@ -109,7 +112,17 @@ function help () {
 let taskslist = ["task1", "task2", "task3"];
 function list(text) {
   for (let i = 0; i < taskslist.length; i++) {
-    console.log(`${i + 1} - ${taskslist[i]}`);
+    console.log(`${i + 1} - [ ] ${taskslist[i]}`);
   }
 }
 
+//adds task to list//
+function add(obj) {
+  obj = obj.trim().split(" ")[1]
+  if (obj == undefined) {
+    console.log("error")
+  }
+  else {
+    taskslist.push(obj)
+  }
+}
