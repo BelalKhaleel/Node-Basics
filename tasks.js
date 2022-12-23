@@ -37,8 +37,8 @@ function onDataReceived(text) {
   if (text === 'quit\n' || text === 'exit\n') {
     quit();
   }
-  else if(text === 'hello\n'){
-    hello();
+  else if(text === 'hello\n' || text.split(" ")[0] === "hello"){
+    hello(text);
   }
   else if(text === 'help\n'){
     help();
@@ -66,8 +66,17 @@ function unknownCommand(c){
  *
  * @returns {void}
  */
-function hello(){
-  console.log('hello!')
+function hello(text){
+  if (text === "hello\n"){
+    console.log("hello!");
+    return
+  }
+  text = text.replace('\n', '').trim();
+  var info = text.split(' ');
+  if (info[0] === 'hello'){
+    var data = info.slice(1).join(" ");
+    console.log(`hello ${data}!`)
+  }
 }
 
 
@@ -92,3 +101,4 @@ function help () {
   commandList.forEach((e) => {
   console.log(e)})
 }
+
