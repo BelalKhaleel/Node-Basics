@@ -34,10 +34,11 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
-  if (text === 'quit\n') {
+  text = text.trim();
+  if (text === "quit") {
     quit();
   }
-  else if(text === 'hello\n'){
+  else if(text === "hello"){
     hello();
   }
   else{
