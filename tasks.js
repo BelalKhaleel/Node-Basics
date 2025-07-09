@@ -55,7 +55,9 @@ function onDataReceived(text) {
     case "add":
       add(task);
       break;
-  
+    case "remove":
+      remove(name);
+      break;
     default:
       unknownCommand(command);
       break;
@@ -79,7 +81,7 @@ function unknownCommand(c) {
  * @returns {void}
  */
 function hello(name) {
-  if(name) {
+  if (name) {
     console.log(`hello ${name}!`);
   } else {
     console.log("hello!");
@@ -96,7 +98,7 @@ function quit() {
   process.exit();
 }
 
-const commands = ["add", "exit", "hello", "help", "list", "quit"];
+const commands = ["add", "exit", "hello", "help", "list", "quit", "remove"];
 
 /**
  * Lists all the possible commands
@@ -113,7 +115,7 @@ function help() {
 const tasks = ["buy batattexttexttexttexta", "do the exercises"];
 /**
  * Lists all tasks
- * 
+ *
  * @returns {void}
  */
 function list() {
@@ -122,7 +124,7 @@ function list() {
 
 /**
  * Add a task
- * 
+ *
  * @returns {void}
  */
 function add(task) {
@@ -131,6 +133,21 @@ function add(task) {
     return;
   }
   tasks.push(task);
+  list();
+}
+
+/**
+ * Remove a task
+ *
+ * @returns {void}
+ */
+function remove(num) {
+  num = parseInt(num);
+  if (num) {
+    tasks.splice(num - 1, 1);
+  } else {
+    tasks.pop();
+  }
   list();
 }
 // The following line starts the application
