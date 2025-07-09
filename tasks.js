@@ -142,11 +142,21 @@ function add(task) {
  * @returns {void}
  */
 function remove(num) {
-  num = parseInt(num);
+  if (!num) {
+    tasks.pop();
+    list();
+    return;
+  } else if (typeof num === 'number') {
+    num = parseInt(num);
+  } else if (typeof num === 'float') {
+    num = parseFloat(num);
+  }
+  if (!tasks[num - 1]) {
+    console.log("Error: please enter a valid task number");
+    return;
+  }
   if (num) {
     tasks.splice(num - 1, 1);
-  } else {
-    tasks.pop();
   }
   list();
 }
