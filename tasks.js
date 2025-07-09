@@ -41,6 +41,8 @@ function onDataReceived(text) {
     hello(name);
   } else if (command === "help") {
     help();
+  } else if (command === "list") {
+    list();
   } else {
     unknownCommand(command);
   }
@@ -80,7 +82,7 @@ function quit() {
   process.exit();
 }
 
-const commands = ["exit", "hello", "help", "quit"];
+const commands = ["exit", "hello", "help", "list", "quit"];
 
 /**
  * Lists all the possible commands
@@ -88,9 +90,20 @@ const commands = ["exit", "hello", "help", "quit"];
  * @returns {void}
  */
 function help() {
+  console.log("\n");
   console.log("Available commands:");
   commands.forEach((command) => console.log(command));
+  console.log("\n");
 }
 
+const tasks = ["buy batattexttexttexttexta", "do the exercises"];
+/**
+ * Lists all tasks
+ * 
+ * @returns {void}
+ */
+function list() {
+  tasks.forEach((task, index) => console.log(`${index + 1} - [ ] ${task}`));
+}
 // The following line starts the application
 startApp("Belal Khaleel");
