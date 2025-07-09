@@ -35,16 +35,30 @@ function onDataReceived(text) {
   text = text.trim().split(" ");
   const command = text[0];
   const name = text[1];
-  if (command === "quit" || command === "exit") {
-    quit();
-  } else if (command === "hello") {
-    hello(name);
-  } else if (command === "help") {
-    help();
-  } else if (command === "list") {
-    list();
-  } else {
-    unknownCommand(command);
+  const task = text.slice(1).join(" ").trim();
+  switch (command) {
+    case "quit" || "exit":
+      quit();
+      break;
+    case "exit":
+      quit();
+      break;
+    case "hello":
+      hello(name);
+      break;
+    case "help":
+      help();
+      break;
+    case "list":
+      list();
+      break;
+    case "add":
+      add(task);
+      break;
+  
+    default:
+      unknownCommand(command);
+      break;
   }
 }
 
@@ -82,7 +96,7 @@ function quit() {
   process.exit();
 }
 
-const commands = ["exit", "hello", "help", "list", "quit"];
+const commands = ["add", "exit", "hello", "help", "list", "quit"];
 
 /**
  * Lists all the possible commands
@@ -104,6 +118,20 @@ const tasks = ["buy batattexttexttexttexta", "do the exercises"];
  */
 function list() {
   tasks.forEach((task, index) => console.log(`${index + 1} - [ ] ${task}`));
+}
+
+/**
+ * Add a task
+ * 
+ * @returns {void}
+ */
+function add(task) {
+  if (!task) {
+    console.log("Error: no task provided");
+    return;
+  }
+  tasks.push(task);
+  list();
 }
 // The following line starts the application
 startApp("Belal Khaleel");
