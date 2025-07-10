@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { json } = require('stream/consumers');
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -105,9 +104,21 @@ function hello(name) {
   }
 }
 
+const alternativeDatabase = process.argv[2];
+try {
+    if (alternativeDatabase && !fs.existsSync(`./${alternativeDatabase}`)) {
+      fs.writeFileSync(alternativeDatabase, '');
+    }
+    if (!fs.existsSync(`./database.json`)) {
+      fs.writeFileSync("./database.json", '');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+const database = alternativeDatabase ?? "./database.json";
 let data = "";
 try {
-  data = fs.readFileSync("./database.json", 'utf8');
+  data = fs.readFileSync(database, 'utf8');
 } catch (error) {
   console.log(error);
 }
@@ -124,7 +135,7 @@ if (data) {
 function quit() {
   const data = JSON.stringify(tasks);
   try {
-    fs.writeFileSync("./database.json", data);
+    fs.writeFileSync(database, data);
   } catch (error) {
     console.error(error);
   }
