@@ -66,6 +66,12 @@ function onDataReceived(text) {
     case "edit":
       edit(name, task);
       break;
+    case "check":
+      check(name);
+      break;
+    case "uncheck":
+      uncheck(name);
+      break;
     default:
       unknownCommand(command);
       break;
@@ -200,6 +206,34 @@ function edit(taskNumber, taskName) {
     tasks.splice(tasks.length - 1, 1, { task: taskName, done: false });
   } 
   list();
-} 
+}
+
+/**
+ * Mark task as done
+ * 
+ * @returns {void}
+ */
+function check(taskNumber) {
+  if(!taskNumber || isNaN(taskNumber)) {
+    console.log("Error: please provide the number of the tasks you want to mark as done.");
+    return;
+  }
+  tasks[parseInt(taskNumber) - 1].done = true;
+  list();
+}
+
+/**
+ * Mark task as undone
+ * 
+ * @returns {void}
+ */
+function uncheck(taskNumber) {
+  if(!taskNumber || isNaN(taskNumber)) {
+    console.log("Error: please provide the number of the tasks you want to mark as done.");
+    return;
+  }
+  tasks[parseInt(taskNumber) - 1].done = false;
+  list();
+}
 // The following line starts the application
 startApp("Belal Khaleel");
