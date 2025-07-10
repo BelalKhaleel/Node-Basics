@@ -120,14 +120,29 @@ function help() {
   console.log("\n");
 }
 
-const tasks = ["buy batattexttexttexttexta", "do the exercises"];
+const tasks = [
+  {
+    task: "buy batattexttexttexttexta",
+    done: false,
+  }, 
+  {
+    task: "do the exercises",
+    done: false,
+  }
+]
 /**
  * Lists all tasks
  *
  * @returns {void}
  */
 function list() {
-  tasks.forEach((task, index) => console.log(`${index + 1} - [ ] ${task}`));
+  tasks.forEach((taskObj, index) => {
+    if(taskObj.done) {
+      console.log(`${index + 1} - [✓] ${taskObj.task}`);
+    } else {
+      console.log(`${index + 1} - [ ] ${taskObj.task}`);
+    }
+  });
 }
 
 /**
@@ -135,12 +150,12 @@ function list() {
  *
  * @returns {void}
  */
-function add(task) {
-  if (!task) {
+function add(taskName) {
+  if (!taskName) {
     console.log("Error: no task provided");
     return;
   }
-  tasks.push(task);
+  tasks.push({ task: taskName, done: false });
   list();
 }
 
@@ -174,15 +189,15 @@ function remove(num) {
  * 
  * @returns {void}
  */
-function edit(taskNumber, task) {
-  if (!taskNumber || !task) {
+function edit(taskNumber, taskName) {
+  if (!taskNumber || !taskName) {
     console.log("Error: please specify which task to edit and the new content.");
     return;
   }
   if (!isNaN(taskNumber)) {
-    tasks.splice((taskNumber - 1), 1, task);
+    tasks.splice((taskNumber - 1), 1, { task: taskName, done: false });
   } else {
-    tasks.splice(tasks.length - 1, 1, task);
+    tasks.splice(tasks.length - 1, 1, { task: taskName, done: false });
   } 
   list();
 } 
