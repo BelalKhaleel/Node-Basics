@@ -35,7 +35,12 @@ function onDataReceived(text) {
   text = text.trim().split(" ");
   const command = text[0];
   const name = text[1];
-  const task = text.slice(1).join(" ").trim();
+  let task = "";
+  if (command === "edit" && !isNaN(name)) {
+    task = text.slice(2).join(" ").trim();
+  } else {
+    task = text.slice(1).join(" ").trim();
+  }
   switch (command) {
     case "quit" || "exit":
       quit();
@@ -57,6 +62,9 @@ function onDataReceived(text) {
       break;
     case "remove":
       remove(name);
+      break;
+    case "edit":
+      edit(name, task);
       break;
     default:
       unknownCommand(command);
@@ -98,7 +106,7 @@ function quit() {
   process.exit();
 }
 
-const commands = ["add", "exit", "hello", "help", "list", "quit", "remove"];
+const commands = ["add", "edit", "exit", "hello", "help", "list", "quit", "remove"];
 
 /**
  * Lists all the possible commands
@@ -160,5 +168,23 @@ function remove(num) {
   }
   list();
 }
+
+/**
+ * Edit a task
+ * 
+ * @returns {void}
+ */
+function edit(taskNumber, task) {
+  if (!taskNumber || !task) {
+    console.log("Error: please specify which task to edit and the new content.");
+    return;
+  }
+  if (!isNaN(taskNumber)) {
+    tasks.splice((taskNumber - 1), 1, task);
+  } else {
+    tasks.splice(tasks.length - 1, 1, task);
+  } 
+  list();
+} 
 // The following line starts the application
 startApp("Belal Khaleel");
