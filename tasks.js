@@ -1,3 +1,5 @@
+const fs = require('fs');
+const { json } = require('stream/consumers');
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -14,6 +16,7 @@ function startApp(name) {
   process.stdin.on("data", onDataReceived);
   console.log(`Welcome to ${name}'s application!`);
   console.log("--------------------");
+  console.log("Type 'help' to list available commands.");
 }
 
 /**
@@ -102,17 +105,34 @@ function hello(name) {
   }
 }
 
+let data = "";
+try {
+  data = fs.readFileSync("./database.json", 'utf8');
+} catch (error) {
+  console.log(error);
+}
+
+let tasks =[];
+if (data) {
+  tasks = [...JSON.parse(data)];
+}
 /**
  * Exits the application
- *
- * @returns {void}
- */
+*
+* @returns {void}
+*/
 function quit() {
+  const data = JSON.stringify(tasks);
+  try {
+    fs.writeFileSync("./database.json", data);
+  } catch (error) {
+    console.error(error);
+  }
   console.log("Quitting now, goodbye!");
   process.exit();
 }
 
-const commands = ["add", "edit", "exit", "hello", "help", "list", "quit", "remove"];
+const commands = ["add", "check", "edit", "exit", "hello", "help", "list", "quit", "remove", "uncheck"];
 
 /**
  * Lists all the possible commands
@@ -126,22 +146,16 @@ function help() {
   console.log("\n");
 }
 
-const tasks = [
-  {
-    task: "buy batattexttexttexttexta",
-    done: false,
-  }, 
-  {
-    task: "do the exercises",
-    done: false,
-  }
-]
 /**
  * Lists all tasks
  *
  * @returns {void}
  */
 function list() {
+  if (tasks.length === 0) {
+    console.log("List is empty. No current tasks. Use 'add' to add tasks.");
+    return;
+  }
   tasks.forEach((taskObj, index) => {
     if(taskObj.done) {
       console.log(`${index + 1} - [✓] ${taskObj.task}`);
